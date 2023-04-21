@@ -41,6 +41,7 @@ public class AccountController {
 		existingAccount.setUsername(account.getUsername());
 		existingAccount.setPassword(account.getPassword());
 		existingAccount.setWebsite(account.getWebsite());
+		existingAccount.setUrl(account.getUrl());
 		Account updatedAccount = accountRepository.save(existingAccount);
 		return ResponseEntity.ok(updatedAccount);
 	}

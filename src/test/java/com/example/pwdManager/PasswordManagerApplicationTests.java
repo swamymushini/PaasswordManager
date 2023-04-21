@@ -1,10 +1,10 @@
-package com.example.Password.Manager;
+package com.example.pwdManager;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PasswordManagerApplicationTests {
+public class PasswordManagerApplicationTests {
 
 	@Test
 	void contextLoads() {

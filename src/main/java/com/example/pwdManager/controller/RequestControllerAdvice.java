@@ -15,7 +15,7 @@ import com.example.pwdManager.errors.IpAddressNotRegisteredException;
 import com.example.pwdManager.repo.SystemDetailsRepository;
 import com.example.pwdManager.service.EmailService;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class RequestControllerAdvice {
@@ -36,7 +36,7 @@ public class RequestControllerAdvice {
 	public void validateIpAddress(HttpServletRequest request) {
 		String ipAddress = request.getRemoteAddr();
 		Optional<SystemDetails> systemDetails = systemDetailsRepository.findByIpAddress(ipAddress);
-		SystemDetails sysDetails = null;
+		SystemDetails sysDetails = systemDetails.orElse(null);
 		if (!systemDetails.isPresent()) {
 			sysDetails = new SystemDetails(null, ipAddress, request.getRemoteHost(), LocalDateTime.now(), false, null);
 			sysDetails.setLastRegisteredOn(LocalDateTime.now());
@@ -44,7 +44,6 @@ public class RequestControllerAdvice {
 					ipAddress + " is trying to access your password manager");
 		}
 
-		sysDetails = systemDetails.get();
 		sysDetails.setLastAccessedOn(LocalDateTime.now());
 		systemDetailsRepository.save(sysDetails);
 	}
