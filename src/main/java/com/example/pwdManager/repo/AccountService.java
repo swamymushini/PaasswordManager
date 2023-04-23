@@ -18,9 +18,9 @@ public class AccountService {
 
     private final String secretKey = "my-secret-key";
 
-    public Account addAccount(String website,String url, String username, String password) {
+    public Account addAccount(String website,String url, String username, String password, String secretKey) {
         String encryptedPassword = encryptPassword(password);
-        Account account = new Account(website, url, username, encryptedPassword);
+        Account account = new Account(website, url, username, encryptedPassword,secretKey);
         return accountRepository.save(account);
     }
 

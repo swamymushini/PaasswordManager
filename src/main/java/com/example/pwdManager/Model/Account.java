@@ -15,6 +15,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "accounts")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Account {
@@ -34,21 +35,16 @@ public class Account {
 	@Column(nullable = false)
 	private String password;
 
-	public Account(Long id, String website, String url, String username, String password) {
-		super();
-		this.id = id;
-		this.website = website;
-		this.url = url;
-		this.username = username;
-		this.password = password;
-	}
+	@Column(nullable = false)
+	private String secretKey;
 
-	public Account(String website, String url, String username, String password) {
+	public Account(String website, String url, String username, String password, String secretKey) {
 		super();
 		this.website = website;
 		this.url = url;
 		this.username = username;
 		this.password = password;
+		this.secretKey = secretKey;
 	}
 
 }
