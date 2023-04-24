@@ -11,5 +11,5 @@ import com.example.pwdManager.Model.Account;
 public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Account> findByWebsite(String website);
     List<Account> findByWebsiteContainingIgnoreCase(String website);
-
+	Account findByWebsiteAndSecretKey(String website, String secretKey);
 }
