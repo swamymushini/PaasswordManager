@@ -1,5 +1,6 @@
 package com.example.pwdManager.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -73,4 +74,15 @@ public class AccountController {
 	public List<Account> findByWebsite(@RequestParam("website") String matchingName) {
 		return accountRepository.findByWebsiteContainingIgnoreCase(matchingName);
 	}
+	
+
+    @GetMapping("/websites")
+    public List<String> getAllWebsites() {
+        List<Account> accounts = accountRepository.findAll();
+        List<String> websites = new ArrayList<>();
+        for (Account account : accounts) {
+            websites.add(account.getWebsite());
+        }
+        return websites;
+    }
 }
