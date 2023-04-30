@@ -11,5 +11,7 @@ import com.example.pwdManager.Model.Account;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 	Account findByWebsiteIdAndSecretKey(Long websiteId, String secretKey);
 
+	Account findByWebsiteIdAndSecretKeyAndUserId(Long websiteId, String secretKey, Long userId);
+
 	List<Account> findByUserId(Long userId);
 }

@@ -81,8 +81,9 @@ public class AccountController {
 	}
 
 	@GetMapping("/account")
-	public ResponseEntity<Account> getAccount(@RequestParam Long websiteId, @RequestParam String secretKey) {
-		Account account = accountRepository.findByWebsiteIdAndSecretKey(websiteId, secretKey);
+	public ResponseEntity<Account> getAccount(@RequestParam Long websiteId, @RequestParam String secretKey,
+			@RequestParam Long userId) {
+		Account account = accountRepository.findByWebsiteIdAndSecretKeyAndUserId(websiteId, secretKey, userId);
 
 		if (account == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
