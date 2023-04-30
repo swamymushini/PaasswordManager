@@ -35,7 +35,7 @@ public class UserService {
 
 			User user = userRepository.findByEmail(email);
 			if (user == null)
-				user = new User(email, name, photo);
+				user = new User(name, email, photo);
 
 			return userRepository.save(user);
 		} else {
