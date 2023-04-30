@@ -1,6 +1,7 @@
 package com.example.pwdManager.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import com.example.pwdManager.Model.Website;
 import com.example.pwdManager.errors.ResourceNotFoundException;
 import com.example.pwdManager.repo.AccountRepository;
 import com.example.pwdManager.repo.WebsiteRepository;
+import com.example.pwdManager.service.UserService;
 
 @RestController
 @RequestMapping("/accounts")
@@ -28,11 +30,14 @@ public class AccountController {
 
 	private final AccountRepository accountRepository;
 	private final WebsiteRepository websiteRepository;
+	private final UserService userService;
 
 	@Autowired
-	public AccountController(AccountRepository accountRepository, WebsiteRepository websiteRepository) {
+	public AccountController(AccountRepository accountRepository, WebsiteRepository websiteRepository,
+			UserService userService) {
 		this.accountRepository = accountRepository;
 		this.websiteRepository = websiteRepository;
+		this.userService = userService;
 	}
 
 	@PostMapping("/add")
@@ -65,6 +70,13 @@ public class AccountController {
 	@GetMapping("/websites")
 	public List<Website> getAllWebsites() {
 		List<Website> websites = websiteRepository.findAll();
+		return websites;
+	}
+
+	@GetMapping("/websites/user")
+	public List<Website> getAllWebsitesByUser(@RequestParam Long userId) {
+		List<Account> accounts = accountRepository.findByUserId(userId);
+		List<Website> websites = accounts.stream().map(Account::getWebsite).collect(Collectors.toList());
 		return websites;
 	}
 
