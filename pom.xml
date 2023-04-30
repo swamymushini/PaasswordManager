@@ -52,8 +52,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>ij</artifactId>
+			<version>1.53h</version>
+		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -87,6 +91,11 @@
 			<releases>
 				<enabled>false</enabled>
 			</releases>
+		</repository>
+		<repository>
+			<id>imagej.public</id>
+			<name>ImageJ Public Repository</name>
+			<url>https://maven.imagej.net/content/groups/public</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
