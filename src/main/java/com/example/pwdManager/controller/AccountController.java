@@ -21,7 +21,6 @@ import com.example.pwdManager.Model.Website;
 import com.example.pwdManager.errors.ResourceNotFoundException;
 import com.example.pwdManager.repo.AccountRepository;
 import com.example.pwdManager.repo.WebsiteRepository;
-import com.example.pwdManager.service.UserService;
 
 @RestController
 @RequestMapping("/accounts")
@@ -30,19 +29,17 @@ public class AccountController {
 
 	private final AccountRepository accountRepository;
 	private final WebsiteRepository websiteRepository;
-	private final UserService userService;
 
 	@Autowired
-	public AccountController(AccountRepository accountRepository, WebsiteRepository websiteRepository,
-			UserService userService) {
+	public AccountController(AccountRepository accountRepository, WebsiteRepository websiteRepository) {
 		this.accountRepository = accountRepository;
 		this.websiteRepository = websiteRepository;
-		this.userService = userService;
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Account> addAccount(@RequestBody Account account) {
-
+	public ResponseEntity<?> addAccount(@RequestBody Account account) {
+		try {
+			
 		Website website = websiteRepository.findByName(account.getWebsite().getName());
 
 		if (website == null) {
@@ -53,6 +50,10 @@ public class AccountController {
 		account.setWebsite(website);
 		Account newAccount = accountRepository.save(account);
 		return ResponseEntity.status(HttpStatus.CREATED).body(newAccount);
+		
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Account not found");
+		}
 	}
 
 	@PutMapping("/update/{id}")
@@ -81,12 +82,12 @@ public class AccountController {
 	}
 
 	@GetMapping("/account")
-	public ResponseEntity<Account> getAccount(@RequestParam Long websiteId, @RequestParam String secretKey,
+	public ResponseEntity<?> getAccount(@RequestParam Long websiteId, @RequestParam String secretKey,
 			@RequestParam Long userId) {
 		Account account = accountRepository.findByWebsiteIdAndSecretKeyAndUserId(websiteId, secretKey, userId);
 
 		if (account == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account not found");
 		} else {
 			return ResponseEntity.ok(account);
 		}
