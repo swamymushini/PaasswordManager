@@ -48,6 +48,7 @@ public class AccountController {
 		}
 
 		account.setWebsite(website);
+		website.setUrl(account.getWebsite().getUrl());
 		Account newAccount = accountRepository.save(account);
 		return ResponseEntity.status(HttpStatus.CREATED).body(newAccount);
 		
